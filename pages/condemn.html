@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/style.css" rel="stylesheet" />
+
+    <title>The Guilty</title>
+  </head>
+
+  <body>
+    <div class="condemn-background-container"></div>
+
+    <header class="header-bar">
+      <a href="/#" class="icon-link">
+        <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
+      </a>
+      <h1>The Guilty</h1>
+      <a href="/pages/condemn.html" class="icon-link">
+        <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
+      </a>
+    </header>
+    <div class="content-container">
+      <form
+        action="http://amgilder.wcit.cs.unh.edu/cgi-bin/test403"
+        method="POST"
+      >
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" autocomplete="name" />
+
+        <label for="infraction">Type of Infraction:</label>
+        <select id="infraction" name="infraction">
+          <option value="envy">Envy</option>
+          <option value="greed">Greed</option>
+          <option value="gluttony">Gluttony</option>
+          <option value="wrath">Wrath</option>
+          <option value="sloth">Sloth</option>
+          <option value="pride">Pride</option>
+          <option value="lust">Lust</option>
+        </select>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+        <div class="form-row">
+          <div class="input-group">
+            <label for="evidence">Upload Evidence:</label>
+            <input type="file" id="evidence" name="evidence" />
+          </div>
+          <div class="input-group">
+            <label for="severity">Severity (1-10):</label>
+            <input
+              type="range"
+              id="severity"
+              name="severity"
+              min="1"
+              max="10"
+            />
+          </div>
+        </div>
+        <input type="submit" value="Submit Condemnation" />
+      </form>
+
+      <h2>Condemnation Records</h2>
+      <table border="1" style="border-collapse: collapse">
+        <caption>
+          List of Recent Condemnations
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Type of Sin</th>
+            <th scope="col">Evidence</th>
+            <th scope="col">Severity</th>
+            <th scope="col">Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Envy</td>
+            <td><a href="evidence1.jpg">Link</a></td>
+            <td rowspan="2">High</td>
+            <!-- Example of rowspan -->
+            <td rowspan="3">Multiple infractions</td>
+            <!-- Extended rowspan -->
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>Greed</td>
+            <td><a href="evidence2.jpg">Link</a></td>
+          </tr>
+          <tr>
+            <td>Bob Johnson</td>
+            <td>Pride</td>
+            <td><a href="evidence3.jpg">Link</a></td>
+            <td>Medium</td>
+          </tr>
+          <tr>
+            <td colspan="4">Total Cases</td>
+            <!-- Example of colspan -->
+            <td>3</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">End of Record</td>
+            <!-- Utilizing colspan -->
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </body>
+</html>
