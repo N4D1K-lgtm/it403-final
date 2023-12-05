@@ -21,6 +21,13 @@
       </a>
     </header>
     <div class="content-container">
+      <h2>Submit Your Condemnation</h2>
+      <p>
+        Fill out the form below to report a transgression, specifying the type
+        of infraction and providing necessary details. Your vigilance helps
+        preserve the purity of the programming community through the only
+        appropriate punishment: public shame.
+      </p>
       <form
         action="http://amgilder.wcit.cs.unh.edu/cgi-bin/test403"
         method="POST"
@@ -28,7 +35,7 @@
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" autocomplete="name" />
 
-        <label for="infraction">Type of Infraction:</label>
+        <label for="infraction">Sin:</label>
         <select id="infraction" name="infraction">
           <option value="envy">Envy</option>
           <option value="greed">Greed</option>
@@ -57,57 +64,58 @@
             />
           </div>
         </div>
-        <input type="submit" value="Submit Condemnation" />
+        <input type="submit" value="Pass Judgement" />
       </form>
 
-      <h2>Condemnation Records</h2>
-      <table border="1" style="border-collapse: collapse">
-        <caption>
-          List of Recent Condemnations
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Type of Sin</th>
-            <th scope="col">Evidence</th>
-            <th scope="col">Severity</th>
-            <th scope="col">Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>John Doe</td>
-            <td>Envy</td>
-            <td><a href="evidence1.jpg">Link</a></td>
-            <td rowspan="2">High</td>
-            <!-- Example of rowspan -->
-            <td rowspan="3">Multiple infractions</td>
-            <!-- Extended rowspan -->
-          </tr>
-          <tr>
-            <td>Jane Smith</td>
-            <td>Greed</td>
-            <td><a href="evidence2.jpg">Link</a></td>
-          </tr>
-          <tr>
-            <td>Bob Johnson</td>
-            <td>Pride</td>
-            <td><a href="evidence3.jpg">Link</a></td>
-            <td>Medium</td>
-          </tr>
-          <tr>
-            <td colspan="4">Total Cases</td>
-            <!-- Example of colspan -->
-            <td>3</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="5">End of Record</td>
-            <!-- Utilizing colspan -->
-          </tr>
-        </tfoot>
-      </table>
+      <div class="guilty">
+        <table border="1">
+          <caption>
+            The Hall of The Guilty
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Type of Sin</th>
+              <th scope="col">Evidence</th>
+              <th scope="col">Severity</th>
+              <th scope="col">Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>Envy</td>
+              <td><a href="evidence1.jpg">Link</a></td>
+              <td rowspan="2">High</td>
+              <!-- Example of rowspan -->
+              <td rowspan="3">Multiple infractions</td>
+              <!-- Extended rowspan -->
+            </tr>
+            <tr>
+              <td>Jane Smith</td>
+              <td>Greed</td>
+              <td><a href="evidence2.jpg">Link</a></td>
+            </tr>
+            <tr>
+              <td>Bob Johnson</td>
+              <td>Pride</td>
+              <td><a href="evidence3.jpg">Link</a></td>
+              <td>Medium</td>
+            </tr>
+            <tr>
+              <td colspan="4">Total Cases</td>
+              <!-- Example of colspan -->
+              <td>3</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5">End of Record</td>
+              <!-- Utilizing colspan -->
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </body>
 </html>

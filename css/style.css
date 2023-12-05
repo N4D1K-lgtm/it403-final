@@ -302,9 +302,12 @@ form select option {
 }
 
 form input[type="submit"] {
-  background-color: #646cff;
+  margin-top: 1em;
+  background-color: #0748b0;
   color: #fff;
   border: none;
+  font-weight: bold;
+  font-size: 1.1em;
   padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
@@ -314,39 +317,52 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
   background-color: #555;
 }
+/* Container for the table to help with centering */
+.guilty {
+  margin-top: 24px;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-table {
+/* Styles for the table */
+.guilty table {
   border-collapse: collapse;
-  width: 80%;
-  max-width: 800px;
-  margin-bottom: 20px;
+  width: 80%; /* Adjust width as needed */
+  margin: 20px 0;
+  border-radius: 8px; /* Rounded corners */
+  overflow: hidden; /* Ensures the border-radius applies to child elements */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-table,
-th,
-td {
+/* Styles for table cells and headers */
+.guilty th,
+.guilty td {
   border: 1px solid #222;
-}
-
-th,
-td {
   text-align: left;
   padding: 8px;
+  background-color: #fff; /* White background for cells */
+  color: #222; /* Dark text for readability */
 }
 
-th {
-  background-color: #f0f0f0;
+.guilty th {
+  background-color: #f0f0f0; /* Light grey background for headers */
+  font-weight: bold; /* Bold text for headers */
 }
 
-caption {
+.guilty caption {
   caption-side: top;
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 10px;
+  color: #222;
 }
 
-tfoot td {
-  background-color: #f0f0f0;
+/* Footer styles */
+.guilty tfoot td {
+  background-color: #f0f0f0; /* Light grey background for footer */
 }
 
 ::-webkit-scrollbar {
