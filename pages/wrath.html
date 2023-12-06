@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
+    <link href="/css/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
     <title>7 Sins of OOP: Wrath</title>
   </head>
-
-  <body>
+  <body class="line-numbers">
     <header class="header-bar">
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
@@ -18,5 +18,103 @@
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
     </header>
+
+    <main class="sin-content">
+      <section class="introduction">
+        <h2>Understanding Pattern Abuse</h2>
+        <p>
+          Pattern Abuse occurs when a common programming pattern is applied
+          unnecessarily or instinctually without any real reason, complicating
+          the codebase without providing the benefits it's designed for. This
+          often leads to a rigid and over-engineered system that employs a
+          solution that doesn't fit the problem.
+        </p>
+      </section>
+
+      <section class="examples">
+        <h2>Example: Overused Factory Pattern</h2>
+        <p>
+          The <code>ProductFactory</code> class demonstrates an overuse of the
+          <a
+            href="https://www.geeksforgeeks.org/factory-method-for-designing-pattern/"
+            >Factory Pattern</a
+          >
+          for creating simple product objects, where a straightforward
+          constructor would suffice.
+        </p>
+        <p>
+          The decision to use a factory pattern over direct constructors often
+          stems from scenarios where object creation logic is complex or needs
+          to be abstracted. This is particularly true in cases involving
+          abstract classes or when the type of object to be created might vary
+          based on certain conditions. A factory pattern shines in situations
+          where the construction process involves more than just instantiating a
+          class, such as when different subclasses need to be instantiated based
+          on input parameters or when additional setup is required
+          post-instantiation. It provides a clear separation of concerns,
+          encapsulating the instantiation logic and offering flexibility to
+          introduce new types without altering existing code. However, the
+          frequency that this pattern is employed can lead programmers to
+          instinctually prefer "factories" over traditional object
+          instantiation, similar logic can be applied to any worthwhile software
+          engineering pattern.
+        </p>
+        <em
+          >"All patterns are created equal, but some patterns are more equal
+          than others" ~ based 10x engineer</em
+        >
+        <br />
+
+        <pre><code class="language-csharp">public class ProductFactory
+{
+    public Product CreateProduct(int id, string name, decimal price)
+    {
+        return new Product(id, name, price);
+    }
+}
+
+public class Product
+{
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+    public decimal Price { get; private set; }
+
+    public Product(int id, string name, decimal price)
+    {
+        Id = id;
+        Name = name;
+        Price &#61; price;
+    }
+}
+        </code></pre>
+      </section>
+
+      <section class="resolved-example">
+        <h3>Refactored Solution</h3>
+        <p>
+          The refactored approach removes the unnecessary
+          <code>ProductFactory</code> and utilizes the
+          <code>Product</code> class's constructor directly. This simplifies the
+          code and makes object creation more transparent and easy to remember.
+        </p>
+        <pre><code class="language-csharp">public class Product
+{
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+    public decimal Price { get; private set; }
+
+    public Product(int id, string name, decimal price)
+    {
+        Id = id;
+        Name = name;
+        Price = price;
+    }
+}
+
+// usage
+var product = new Product(1, "Sample Product", 9.99m);
+        </code></pre>
+      </section>
+    </main>
   </body>
 </html>

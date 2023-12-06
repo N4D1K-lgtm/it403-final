@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
+    <link href="/css/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
     <title>7 Sins of OOP: Pride</title>
   </head>
-
-  <body>
+  <body class="line-numbers">
     <header class="header-bar">
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
@@ -18,5 +18,103 @@
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
     </header>
+
+    <main class="sin-content">
+      <section class="introduction">
+        <h2>Understanding Goliath Objects</h2>
+        <p>
+          Goliath Objects or
+          <a href="https://linearb.io/blog/what-is-a-god-class">God Objects</a>
+          refer to overly large and complex classes in OOP that try to do too
+          much. These 'jack-of-all-trades' classes often end up violating the
+          <a
+            href="https://en.wikipedia.org/wiki/Single_responsibility_principle"
+            >Single Responsibility Principle</a
+          >. Goliaith Objects tend to end up as
+          <a href="https://en.wikipedia.org/wiki/Singleton_pattern"
+            >singletons</a
+          >, due to the fact that they have so many responsibilities. Large
+          singletons with tons of responsibility are "public enemy number one"
+          of modular and reusable code.
+        </p>
+      </section>
+
+      <section class="examples">
+        <h2>Example: The Monolithic 'Manager' Class</h2>
+        <p>
+          The <code>ApplicationManager</code> class demonstrates a Goliath
+          Object, taking on responsibilities that could be better handled by
+          multiple, smaller classes.
+        </p>
+        <pre><code class="language-csharp">public class ApplicationManager
+{
+    // Combines user management, data processing, and more
+    // ... numerous methods and properties ...
+
+    public void HandleUserRegistration(string username, string password) { /* ... */ }
+    public void ProcessData(Data data) { /* ... */ }
+    public Report GenerateReport() { /* ... */ }
+    // ... many more methods ...
+}
+        </code></pre>
+      </section>
+
+      <section class="resolved-example">
+        <h3>Refactored Solution</h3>
+        <p>
+          The refactored approach breaks down the
+          <code>ApplicationManager</code> into smaller, more focused classes,
+          each handling a specific aspect of the application's functionality.
+          <br /><em>
+            <strong>Note:</strong>
+            If you would like to have a larger <code>ApplicationManager</code>,
+            you should wrap each of your individual classes instead of directly
+            implementing these methods on <code>ApplicationManager</code>.</em
+          >
+        </p>
+        <pre><code class="language-csharp">public class UserManager
+{
+    public void HandleUserRegistration(string username, string password) { /* ... */ }
+    // ... user-related methods ...
+}
+
+public class DataProcessor
+{
+    public void ProcessData(Data data) { /* ... */ }
+    // ... data processing methods ...
+}
+
+public class ReportGenerator
+{
+    public Report GenerateReport() { /* ... */ }
+    // ... report generation methods ...
+}
+
+public class ApplicationManager
+{
+  // ... numerous methods and properties ...
+  
+  private UserManager userManager;
+  private DataProcessor dataProcessor;
+  private ReportGenerator reportGenerator;
+
+  public ApplicationManager()
+  {
+    userManager = new UserManager();
+    dataProcessor = new DataProcessor();
+    reportGenerator = new ReportGenerator();
+  }
+
+  public handleIncident()
+  {
+    user = userManager.GetUser();
+    data = dataProcessor.ProcessData(user);
+    return reportGenerator.GenerateReport(data);
+  }
+
+}
+        </code></pre>
+      </section>
+    </main>
   </body>
 </html>

@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
+    <link href="/css/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
     <title>7 Sins of OOP: Greed</title>
   </head>
-
-  <body>
+  <body class="line-numbers">
     <header class="header-bar">
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
@@ -18,5 +18,138 @@
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
     </header>
+
+    <main class="sin-content">
+      <section class="introduction">
+        <h2>Understanding Unnecessary Encapsulation</h2>
+        <p>
+          Unnecessary Encapsulation in OOP occurs when a class excessively hides
+          its data and functionality, creating complex and redundant access
+          patterns. This overuse of encapsulation can lead to code that is
+          difficult to understand and maintain. Like most of these problems,
+          this can be a class design issue or abuse of an implementation
+          pattern. Always think carefully about the scope of your class as you
+          are desining and planning.
+        </p>
+      </section>
+
+      <section class="examples">
+        <h2>Real-World Example</h2>
+        <p>
+          A <code>UserProfile</code> class might include an overuse of getters
+          and setters, along with convoluted methods for simple data
+          manipulation.
+        </p>
+        <pre><code class="language-csharp">public class UserProfile
+{
+    private string name;
+    private string email;
+    private DateTime dateOfBirth;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            name = value;
+        }
+    }
+
+    public string GetEmail()
+    {
+        return email;
+    }
+
+    public void SetEmail(string value)
+    {
+        if (value.Contains("@"))
+        {
+            email = value;
+        }
+    }
+
+    public DateTime GetDateOfBirth()
+    {
+        return dateOfBirth;
+    }
+
+    public void SetDateOfBirth(DateTime value)
+    {
+        if (value &lt; DateTime.Now)
+        {
+            dateOfBirth = value;
+        }
+    }
+}
+            </code></pre>
+      </section>
+
+      <section>
+        <h2>Mitigating Unnecessary Encapsulation</h2>
+        <p>
+          It is crucial to find a balance. Encapsulation should protect the
+          integrity of the data while keeping the class user-friendly and
+          maintainable. Try to avoid having tons of methods on your class that
+          essentially return member properties.
+        </p>
+      </section>
+
+      <section class="resolved-example">
+        <h3>Refactored Solution with Validation</h3>
+        <p>
+          The refactored <code>UserProfile</code> class uses properties with
+          private setters for encapsulation. Public methods are provided for
+          setting values, where validation logic is applied. This eliminates the
+          unnecessary getters while ensuring that the class properties
+          associated with <code>UserProfile</code> are always valid. It is much
+          more mental work to remember to call the method
+          <code>UserProfile.getName()</code> instead of directly acessing
+          <code>UserProfile.Name</code>.
+        </p>
+        <pre><code class="language-csharp">public class UserProfile
+{
+    public string Name { get; private set; }
+    public string Email { get; private set; }
+    public DateTime DateOfBirth { get; private set; }
+
+    public bool TrySetName(string value)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            Name = value;
+            return true;
+        }
+        return false;
+    }
+
+    public bool TrySetEmail(string value)
+    {
+        if (value.Contains("@"))
+        {
+            Email = value;
+            return true;
+        }
+        return false;
+    }
+
+    public bool TrySetDateOfBirth(DateTime value)
+    {
+        if (value &lt; DateTime.Now)
+        {
+            DateOfBirth = value;
+            return true;
+        }
+        return false;
+    }
+
+    // other methods...
+}
+    </code></pre>
+      </section>
+    </main>
   </body>
 </html>

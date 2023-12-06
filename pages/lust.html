@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
+    <link href="/css/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
     <title>7 Sins of OOP: Lust</title>
   </head>
-
-  <body>
+  <body class="line-numbers">
     <header class="header-bar">
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
@@ -18,5 +18,128 @@
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
     </header>
+
+    <main class="sin-content">
+      <section class="introduction">
+        <h2>Understanding Premature Optimization</h2>
+        <p>
+          Premature optimization is the sin of optimizing parts of code before
+          having a clear understanding of where the actual performance
+          bottlenecks are. This often leads to wasted time and effort, as well
+          as possibly unmaintable code. In many cases, "optimizing" involves a
+          tradeoff of a general solution for a more specific one, and it is
+          counterproductive to try to predict the specific needs of a system
+          before it is (mostly) implemented.
+        </p>
+      </section>
+
+      <section class="examples">
+        <h2>Example: Over-Optimized InventoryManager</h2>
+        <p>
+          The <code>InventoryManager</code> class demonstrates premature
+          optimization by using complex data structures and an unnecessary
+          caching mechanism. (I also understand this is still relatively simple,
+          but a new programmer could spend several hours on this when they
+          should be figuring out the rest of the needed functionality). This
+          example seems trivial, but stuff like this can easily be found out in
+          the wild.
+        </p>
+        <pre><code class="language-csharp">public class InventoryManager
+{
+    // define a sorted dictionary to store products by ID when they don't need to be sorted
+    private SortedDictionary&lt;int, Product&gt; products = new SortedDictionary&lt;int, Product&gt;();
+    // define a dictionary to store product details when we might not need a cache at all.
+    private Dictionary&lt;int, ProductDetails&gt; productDetailsCache = new Dictionary&lt;int, ProductDetails&gt;();
+
+    public void AddProduct(int productId, string productName, decimal price)
+    {
+        var product = new Product(productId, productName, price);
+        products.Add(productId, product);
+    }
+
+    public ProductDetails GetProductDetails(int productId)
+    {
+        if (productDetailsCache.ContainsKey(productId))
+        {
+            return productDetailsCache[productId];
+        }
+
+        var details = FetchProductDetailsFromDatabase(productId);
+        productDetailsCache.Add(productId, details);
+        return details;
+    }
+
+    public decimal CalculateTotalInventoryValue()
+    {
+        // loop unrolled for performance (negligable performance gain)
+        decimal totalValue = 0;
+        foreach (var product in products.Values)
+        {
+            totalValue += product.Price;
+        }
+        return totalValue;
+    }
+
+    private ProductDetails FetchProductDetailsFromDatabase(int productId)
+    {
+        // simulate database fetch...
+        return new ProductDetails();
+    }
+  
+}
+   // continue with classes for Product and ProductDetails...
+
+
+</code>
+      </pre>
+      </section>
+
+      <section class="resolved-example">
+        <h3>Refactored Solution</h3>
+        <p>
+          The refactored <code>InventoryManager</code> class simplifies the data
+          structures and removes the optimizations. Notice how much more
+          readable it is. Optimization should always be kept in mind, but it is
+          important to optimize the most significant bottlenecks first, which
+          you don't know until you
+          <a
+            href="https://en.wikipedia.org/wiki/Profiling_(computer_programming)"
+            >profile</a
+          >, and you can't profile a half finished implementation.
+        </p>
+        <pre><code class="language-csharp">public class InventoryManager
+{
+    private Dictionary&lt;int, Product&gt; products = new Dictionary&lt;int, Product&gt;();
+
+    public void AddProduct(int productId, string productName, decimal price)
+    {
+        var product = new Product(productId, productName, price);
+        products[productId] = product; // simplified to a basic dictionary
+    }
+
+    public ProductDetails GetProductDetails(int productId)
+    {
+        // directly fetch details without caching
+        return FetchProductDetailsFromDatabase(productId);
+    }
+
+    public decimal CalculateTotalInventoryValue()
+    {
+        // use LINQ sum instead of manual loop
+        return products.Values.Sum(product =&gt; product.Price);
+    }
+
+    private ProductDetails FetchProductDetailsFromDatabase(int productId)
+    {
+        // simulate database fetch...
+        return new ProductDetails();
+    }
+
+}
+
+// continue with classes for Product and ProductDetails...
+</code></pre>
+      </section>
+    </main>
   </body>
 </html>

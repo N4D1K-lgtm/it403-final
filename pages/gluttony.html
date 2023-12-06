@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
+    <link href="/css/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
     <title>7 Sins of OOP: Gluttony</title>
   </head>
-
-  <body>
+  <body class="line-numbers">
     <header class="header-bar">
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
@@ -18,5 +18,133 @@
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
     </header>
+
+    <main class="sin-content">
+      <section class="introduction">
+        <h2>Understanding Excessive Inheritance</h2>
+        <p>
+          Excessive Inheritance is a sin that occurs when inheritance is
+          overused, leading to deep and complex object hierarchies. This
+          approach often results in classes inheriting properties or behaviors
+          they don't need, which can tack on unused methods and properties. In
+          some cases, inheritance can actually force boilerplate implementations
+          of methods irrelevant to the functionality of the class.
+        </p>
+        <p>
+          Deep inheritance hierarchies can make the codebase incredibly
+          difficult to refactor. Developers must navigate through multiple
+          layers of classes to understand how a particular method or property is
+          being used or overridden. They also tend to teach programmers never to
+          mess with a parent class for fear of a ripple of unforeseen
+          consequences. I personally have spent many hours shoehorning a
+          specific edge-case class implementation into inheriting from a given
+          parent class, only to completely rewrite the class from scratch
+          without inheritance. (which defeats the entire purpose)
+        </p>
+        <p>
+          A common misconception in OOP is that inheritance is the primary means
+          to achieve
+          <a
+            href="https://www.techtarget.com/whatis/definition/polymorphism#:~:text=Polymorphism%20is%20a%20popular%20concept,means%20%22having%20multiple%20forms.%22"
+            >polymorphism</a
+          >
+          and code reuseability. However, composition is often a more flexible
+          and maintainable alternative. Composition involves building classes
+          from other classes through relationships, rather than extending them
+          through inheritance. This approach allows for more modular and
+          decoupled design, where objects are composed of other objects with
+          well-defined interfaces, rather than inheriting all properties and
+          behaviors I highly recommend watching this video:
+          <a href="https://www.youtube.com/watch?v=hxGOiiR9ZKg"
+            >Composition vs Inheritance</a
+          >.
+        </p>
+      </section>
+
+      <section class="examples">
+        <h2>Example: Over-Extended User Account Hierarchy</h2>
+        <p>
+          The <code>UserAccount</code> class hierarchy demonstrates excessive
+          inheritance, where subclasses inherit and override methods and
+          properties, leading to a rigid and complex structure.
+        </p>
+        <pre><code class="language-csharp">public class UserAccount
+{
+    public string Username { get; set; }
+    public string Password { get; set; }
+    public virtual void Login() { /* ... */ }
+    public virtual void Logout() { /* ... */ }
+}
+
+public class AdminAccount : UserAccount
+{
+    public override void Login() { /* Admin-specific login logic */ }
+    public void AccessControlPanel() { /* ... */ }
+}
+
+public class GuestAccount : UserAccount
+{
+    public override void Login() { /* Guest-specific login logic */ }
+    public override void Logout() { /* Guest-specific logout logic */ }
+}
+
+public class PremiumAccount : UserAccount
+{
+    public override void Login() { /* Premium account login logic */ }
+    public void AccessPremiumFeatures() { /* ... */ }
+}
+  </code></pre>
+      </section>
+
+      <section class="resolved-example">
+        <h3>Refactored Solution</h3>
+        <p>
+          The refactored approach uses composition over inheritance. Instead of
+          extending the <code>UserAccount</code> class, we create separate
+          classes for different functionalities and compose them as needed. This
+          more accurately models the real-world relationship between a user
+          account and it's types and behaviors.
+        </p>
+
+        <p>
+          If you've been paying attention, you would have noticed I have been
+          using composition in almost all of my examples for the other sins.
+        </p>
+        <p>
+          In a real-world scenario I would reccomend using interfaces to
+          describe a "contract" that the associated objects have to fulfill.
+        </p>
+        <pre><code class="language-csharp">public class UserAccount
+{
+    public string Username { get; set; }
+    public string Password { get; set; }
+    public LoginBehavior LoginBehavior { get; set; }
+    public LogoutBehavior LogoutBehavior { get; set; }
+    public void Login() { LoginBehavior.Login(this); }
+    public void Logout() { LogoutBehavior.Logout(this); }
+}
+
+public class AdminAccount
+{
+    public UserAccount UserAccount { get; set; }
+    public void AccessControlPanel() { /* ... */ }
+}
+
+public class PremiumAccount
+{
+    public UserAccount UserAccount { get; set; }
+    public void AccessPremiumFeatures() { /* ... */ }
+}
+
+// we can also combine the two classes above into one very easily
+public class AdminPremiumAccount {
+    public UserAccount UserAccount { get; set; }
+    public void AccessControlPanel() { /* ... */ }
+    public void AccessPremiumFeatures() { /* ... */ }
+}
+// Classes for LoginBehavior, LogoutBehavior, etc.
+  </code></pre>
+      </section>
+    </main>
   </body>
 </html>

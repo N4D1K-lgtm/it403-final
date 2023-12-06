@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
+    <link href="/css/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
     <title>7 Sins of OOP: Envy</title>
   </head>
-
-  <body>
+  <body class="line-numbers">
     <header class="header-bar">
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
@@ -18,5 +18,128 @@
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
     </header>
+
+    <main class="sin-content">
+      <section class="introduction">
+        <h2>Understanding Feature Envy</h2>
+        <p>
+          Feature Envy occurs when a method in one class frequently accesses
+          data or methods of another class instead of it's own. This
+          anti-pattern can lead to unmaintanable and tightly coupled code. It
+          can also violate the principles of
+          <a
+            href="https://press.rebus.community/programmingfundamentals/chapter/encapsulation/#:~:text=Encapsulation%20is%20one%20of%20the,parties'%20direct%20access%20to%20them."
+            >encapsulation</a
+          >
+          and
+          <a href="https://en.wikipedia.org/wiki/Cohesion_(computer_science)"
+            >cohesion</a
+          >, central tenets of OOP.
+        </p>
+      </section>
+
+      <section class="examples">
+        <h2>An Example</h2>
+        <p>
+          Consider a class <code>Employee</code> that frequently accesses fields
+          or methods of another class <code>Department</code>.
+        </p>
+        <pre><code class="language-csharp">public class Employee
+{
+    public Department Department { get; set; }
+
+    public void PrintDepartmentBudget()
+    {
+        // Feature Envy: Accessing the associated Department more than its own data
+        Console.WriteLine($"Department: {Department.Name}");
+        Console.WriteLine($"Budget: {Department.GetBudget()}");
+    }
+}
+
+public class Department
+{
+    public string Name { get; set; }
+    private decimal budget;
+
+    public decimal GetBudget()
+    {
+        return budget;
+    }
+    // more relevant methods...
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h2>Mitigating Feature Envy</h2>
+        <p>
+          To avoid Feature Envy, it's important to ensure that methods primarily
+          access the data and methods of the class in which they are defined.
+          Generally, classes should have a limited number of responsibilities,
+          so the scope of your data and methods should remain focused on what is
+          necessary to fulfill those responsibilities. Sometimes, Feature Envy
+          is a result of a design error rather than an implementation error,
+          indicating that the current class structures may not be suitable for
+          the functionality you're trying to implement.
+        </p>
+        <p>
+          There is an exception to this rule: implementing a wrapper class.
+          Wrapper classes are designed to provide a simpler API or interface,
+          and it's acceptable for them to have numerous methods that access the
+          data and methods of another class. However, the implementation of
+          wrapper classes should be approached carefully. It is often the case
+          that wrapper classes around small to medium sized API's, do not have a
+          payoff that is worth the seperate maintainance of the abstraction.
+        </p>
+      </section>
+
+      <section class="resolved-example">
+        <h3>Refactored Solution</h3>
+        <p>
+          To address the Feature Envy in the original example, we can refactor
+          the code so that the <code>Department</code> class is responsible for
+          presenting its own details. This change enhances encapsulation and
+          reduces the dependency of the <code>Employee</code> class on the
+          internal details of <code>Department</code>.
+        </p>
+        <pre><code class="language-csharp">public class Employee
+{
+    public Department Department { get; set; }
+    public string Name { get; set; }
+    
+    public void PrintDetails()
+      {
+          Console.WriteLine($"Employee Name: {Name}");
+          if (Department != null)
+          {
+             Department.PrintDetails();
+          }
+      }
+
+    // the rest of this class...
+}
+
+public class Department
+{
+    public string Name { get; set; }
+    private decimal budget;
+
+    public decimal GetBudget()
+    {
+        return budget;
+    }
+
+    public void PrintDetails()
+    {
+        Console.WriteLine($"Department: {Name}");
+        Console.WriteLine($"Budget: {GetBudget()}");
+    }
+
+    // other methods...
+}
+    </code></pre>
+      </section>
+    </main>
   </body>
 </html>

@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
-
+    <link href="/css/prism.css" rel="stylesheet" />
+    <script src="/js/prism.js"></script>
     <title>7 Sins of OOP: Sloth</title>
   </head>
-
-  <body>
+  <body class="line-numbers">
     <header class="header-bar">
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
@@ -18,5 +18,117 @@
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
     </header>
+
+    <main class="sin-content">
+      <section class="introduction">
+        <h2>Understanding Type Indolence</h2>
+        <p>
+          Type Indolence refers to the lazy or inappropriate use of types in
+          OOP, such as overusing generic types or creating ambiguous structures.
+          This leads to unclear code responsibility and ownership. This is a
+          broad category of code smell that can manifest in anything from
+          reusing the same data structure everywhere (cough cough hashmap) to
+          defining a generic struct that holds a ton of unrelated data.
+        </p>
+      </section>
+
+      <section class="examples">
+        <h2>Example: Misuse of Generic Types</h2>
+        <p>
+          The <code>GenericDataHolder</code> class demonstrates Type Indolence
+          by using a generic type to hold various unrelated data types, leading
+          to a lack of clarity in its purpose and usage.
+        </p>
+        <pre><code class="language-csharp">public class GenericDataHolder&lt;T&gt;
+{
+    public T Data { get; set; }
+
+    public void ProcessData()
+    {
+      switch typeof(T)
+        {
+          case int:
+            // Process integer data
+            break;
+          case string:
+            // Process string data
+            break;
+          case User:
+            // Process User objects
+            break;
+          default:
+            // throw exception
+            raise new Exception("Unsupported data type");
+          break;
+        }
+    }
+}
+
+// usage 
+var intHolder = new GenericDataHolder&lt;int&gt; { Data = 42 };
+intHolder.ProcessData();
+var stringHolder = new GenericDataHolder&lt;string&gt; { Data = "Hello" };
+stringHolder.ProcessData();
+var userHolder = new GenericDataHolder&lt;User&gt; { Data = new User() };
+userHolder.ProcessData();
+        </code></pre>
+      </section>
+
+      <section class="resolved-example">
+        <h3>Refactored Solution</h3>
+        <p>
+          A more focused approach involves creating specific classes or methods
+          for each distinct type of data. This enhances clarity and ensures that
+          each class or method is tailored to its specific purpose. This is also
+          happens to be a good use case for inheritance so I've included that in
+          the example.
+        </p>
+        <pre><code class="language-csharp">public abstract class DataProcessor&lt;T&gt;
+{
+    public T Data { get; set; }
+
+    // abstract method to be implemented by derived classes
+    public abstract void ProcessData();
+}
+
+public class IntDataProcessor : DataProcessor&lt;int&gt;
+{
+    public override void ProcessData()
+    {
+        // specific processing for integer data
+        Console.WriteLine($"Processing integer data: {Data}");
+    }
+}
+
+public class StringDataProcessor : DataProcessor&lt;string&gt;
+{
+    public override void ProcessData()
+    {
+        // specific processing for string data
+        Console.WriteLine($"Processing string data: {Data}");
+    }
+}
+
+public class UserDataProcessor : DataProcessor&lt;User&gt;
+{
+    public override void ProcessData()
+    {
+        // specific processing for User objects
+        Console.WriteLine($"Processing user data: {Data.Name}");
+    }
+}
+
+// example 
+var intProcessor = new IntDataProcessor { Data = 42 };
+intProcessor.ProcessData();
+
+var stringProcessor = new StringDataProcessor { Data = "Hello" };
+stringProcessor.ProcessData();
+
+var userProcessor = new UserDataProcessor { Data = new User { Name = "Alice" } };
+userProcessor.ProcessData();        
+        </code></pre>
+      </section>
+    </main>
   </body>
 </html>

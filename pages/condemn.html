@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/style.css" rel="stylesheet" />
 
-    <title>The Guilty</title>
+    <title>Condemn The Guilty</title>
   </head>
 
   <body>
@@ -15,7 +15,7 @@
       <a href="/#" class="icon-link">
         <img src="/images/home-225.svg" alt="Home Icon" class="icon" />
       </a>
-      <h1>The Guilty</h1>
+      <h1>Condemn The Guilty</h1>
       <a href="/pages/condemn.html" class="icon-link">
         <img src="/images/condemn.svg" alt="Condemn Icon" class="icon" />
       </a>
@@ -67,51 +67,82 @@
         <input type="submit" value="Pass Judgement" />
       </form>
 
-      <div class="guilty">
+      <div class="table">
         <table border="1">
           <caption>
-            The Hall of The Guilty
+            The Wall of Transgressors
           </caption>
           <thead>
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Type of Sin</th>
+              <th scope="col">Description</th>
               <th scope="col">Evidence</th>
               <th scope="col">Severity</th>
-              <th scope="col">Remarks</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>John Doe</td>
+              <td rowspan="2">John Doe</td>
               <td>Envy</td>
-              <td><a href="evidence1.jpg">Link</a></td>
-              <td rowspan="2">High</td>
-              <!-- Example of rowspan -->
-              <td rowspan="3">Multiple infractions</td>
-              <!-- Extended rowspan -->
+              <td>Overuse of external class methods in Java</td>
+              <td>N/A</td>
+              <td>7</td>
             </tr>
             <tr>
-              <td>Jane Smith</td>
-              <td>Greed</td>
-              <td><a href="evidence2.jpg">Link</a></td>
+              <td>Lust</td>
+              <td>Unnecessary optimization in Java</td>
+              <td>N/A</td>
+              <td>2</td>
             </tr>
             <tr>
               <td>Bob Johnson</td>
               <td>Pride</td>
-              <td><a href="evidence3.jpg">Link</a></td>
-              <td>Medium</td>
+              <td>Python monolithic class with multiple responsibilities</td>
+              <td>N/A</td>
+              <td>4</td>
             </tr>
             <tr>
-              <td colspan="4">Total Cases</td>
-              <!-- Example of colspan -->
+              <td rowspan="2">Kidan Nelson</td>
+              <td>Wrath</td>
+              <td>Abusing factory pattern</td>
+              <td><a href="/public/PlayerStateFactory.cs">PlayerStateFactory.cs</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Greed</td>
+              <td>
+                Public getter and setter mapped to private property for every
+                single property for no reason.
+              </td>
+              <td>
+                <a href="/public/PlayerStateMachine.cs"
+                  >PlayerStateMachine.cs</a
+                >
+              </td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Alice Smith</td>
+              <td>Gluttony</td>
+              <td>Deep inheritance hierarchy in a Java application</td>
+              <td>N/A</td>
               <td>3</td>
+            </tr>
+            <tr>
+              <td>Michael Brown</td>
+              <td>Sloth</td>
+              <td>
+                Use of generic types without clear responsibilities in
+                JavaScript
+              </td>
+              <td>N/A</td>
+              <td>4</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colspan="5">End of Record</td>
-              <!-- Utilizing colspan -->
             </tr>
           </tfoot>
         </table>

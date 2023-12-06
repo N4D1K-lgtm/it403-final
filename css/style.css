@@ -213,6 +213,16 @@ body {
   margin: 10px 0;
 }
 
+code {
+  color: #000;
+  font-weight: bold;
+}
+
+pre {
+  border: 2px solid #000;
+  border-radius: 4px;
+}
+
 .content-container {
   background-color: #fff;
   border: 2px solid #222;
@@ -221,6 +231,10 @@ body {
   margin: 6em auto;
   max-width: 80%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sin-content {
+  margin: 6em 2em;
 }
 
 .form-row {
@@ -307,7 +321,7 @@ form input[type="submit"] {
   color: #fff;
   border: none;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 1em;
   padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
@@ -317,42 +331,43 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
   background-color: #555;
 }
-/* Container for the table to help with centering */
-.guilty {
+.table {
   margin-top: 24px;
-  padding: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-/* Styles for the table */
-.guilty table {
+.table table {
   border-collapse: collapse;
-  width: 80%; /* Adjust width as needed */
+  width: 80%;
   margin: 20px 0;
-  border-radius: 8px; /* Rounded corners */
-  overflow: hidden; /* Ensures the border-radius applies to child elements */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-size: 0.9em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Styles for table cells and headers */
-.guilty th,
-.guilty td {
-  border: 1px solid #222;
+.table thead tr {
+  background-color: #000;
+  color: #ffffff;
   text-align: left;
-  padding: 8px;
-  background-color: #fff; /* White background for cells */
-  color: #222; /* Dark text for readability */
 }
 
-.guilty th {
-  background-color: #f0f0f0; /* Light grey background for headers */
-  font-weight: bold; /* Bold text for headers */
+.table th,
+.table td {
+  padding: 12px 15px;
 }
 
-.guilty caption {
+.table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table tfoot {
+  background-color: #f3f3f3;
+  border-top: 2px solid #000;
+}
+
+.table caption {
   caption-side: top;
   font-size: 1.2em;
   font-weight: bold;
@@ -360,9 +375,32 @@ form input[type="submit"]:hover {
   color: #222;
 }
 
-/* Footer styles */
-.guilty tfoot td {
-  background-color: #f0f0f0; /* Light grey background for footer */
+.code-container {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+  color: #333;
+  overflow-x: auto;
+}
+
+.keyword {
+  color: #0000ff;
+  font-weight: bold;
+}
+
+.string {
+  color: #a31515;
+}
+
+.comment {
+  color: #008000;
+  font-style: italic;
+}
+
+.number {
+  color: #098658;
 }
 
 ::-webkit-scrollbar {
